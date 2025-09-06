@@ -17,7 +17,7 @@ async function main() {
   program
     .name('hygienic')
     .description('Hygienic is a code hygiene tool that consolidates and normalizes imports across your codebase.')
-    .version('1.0.0')
+    .version('0.0.1')
     .arguments('[paths...]')
     .option('--help-extended', 'Show extended help')
     .option('--fix', 'Apply changes (default is dry-run)')

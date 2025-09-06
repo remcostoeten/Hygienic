@@ -1,7 +1,7 @@
 import { Colors } from './colors';
 import open from 'open';
 import { noop } from './utils/noop';
-const VERSION = '1.0.0';
+const VERSION = '0.0.1';
 const AUTHOR = 'Remco Stoeten (@remcostoeten on GitHub)';
 const GITHUB_URL = 'https://github.com/remcostoeten';
 export async function showHelp() {
@@ -52,7 +52,7 @@ ${Colors.yellow('Press SPACEBAR to open GitHub profile...')}
     process.stdin.setRawMode(true);
     process.stdin.resume();
     process.stdin.on('data', async (key) => {
-      if (key[0] === 32) { 
+      if (key[0] === 32) {
         await open(GITHUB_URL);
         console.log(Colors.green('Opening GitHub profile...'));
         process.exit(0);
