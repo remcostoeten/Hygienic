@@ -109,22 +109,87 @@ Run `hygienic --config` for interactive configuration, or manually edit `~/.conf
 
 ## API Usage
 
+Yes! Hygienic provides a comprehensive API for programmatic usage:
+
+### Basic Example
+
 ```typescript
 import { UIImportConsolidator, Config } from '@remcostoeten/hygienic';
 
+async function consolidateImports() {
+  // 1. Initialize configuration
+  const config = new Config();
+  await config.initialize();
+  
+  // 2. Create consolidator instance
+  const consolidator = new UIImportConsolidator(
+    config,
+    false, // verbose
+    false  // quiet
+  );
+  await consolidator.initialize();
+  
+  // 3. Process files
+  const results = await consolidator.processFiles(
+    ['src/'],      // paths to process
+    true,          // dryRun (false to actually modify files)
+    true,          // sortImports
+    undefined,     // includePatterns
+    undefined,     // excludePatterns  
+    true           // useCache
+  );
+  
+  // 4. Handle results
+  const changedFiles = results.filter(r => r.changed);
+  console.log(`Modified ${changedFiles.length} files`);
+  
+  return results;
+}
+```
+
+### Available Exports
+
+```typescript
+import {
+  UIImportConsolidator,  // Main processing engine
+  Config,                // Configuration management
+  TSXParser,            // TypeScript/JSX parsing
+  Cache,                // File caching
+  History,              // Run history
+  Colors,               // Terminal colors
+  interactiveConfig,    // Interactive config setup
+  interactiveHistory,   // Interactive history viewer
+  showHelp,            // Help display
+  // Types
+  TConsolidationResult,
+  TImportInfo,
+  TConfig,
+  TRunHistory,
+  TCacheData
+} from '@remcostoeten/hygienic';
+```
+
+### Advanced Usage
+
+```typescript
+// Custom configuration
 const config = new Config();
 await config.initialize();
+config.set('barrelPaths', ['src/components/ui/index.ts']);
+config.set('sortImports', true);
 
-const consolidator = new UIImportConsolidator(config, verbose, quiet);
-await consolidator.initialize();
+// Direct parser usage
+const parser = new TSXParser(new Set(['Button', 'Input', 'Card']));
+const [imports, content] = await parser.parseTSXFile('MyComponent.tsx');
 
+// Process with custom options
 const results = await consolidator.processFiles(
-  ['src/'],
-  false, // dryRun
-  true,  // sortImports
-  undefined, // includePatterns
-  undefined, // excludePatterns
-  true   // useCache
+  ['src/components', 'src/pages'],
+  false,                    // Apply changes
+  true,                     // Sort imports
+  ['components', 'pages'],  // Include only these paths
+  ['test', 'stories'],      // Exclude test/story files
+  false                     // Disable cache for fresh run
 );
 ```
 
