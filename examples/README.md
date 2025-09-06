@@ -1,5 +1,7 @@
 # Examples
 
+> Note: These examples use `require('../dist/index.js')` for local testing. When published, use `require('@remcostoeten/hygienic')` instead.
+
 ## Basic Usage
 
 ```bash

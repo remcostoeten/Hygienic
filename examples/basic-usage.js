@@ -1,4 +1,4 @@
-const { UIImportConsolidator, Config } = require('@remcostoeten/hygienic');
+const { UIImportConsolidator, Config } = require('../dist/index.js');
 
 async function consolidateImports() {
   const config = new Config();
