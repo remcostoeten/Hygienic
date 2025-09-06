@@ -1,6 +1,6 @@
 {
   "name": "@remcostoeten/hygienic",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Consolidates UI component imports from individual files into barrel imports. CLI tool with caching, git integration, and CI support.",
   "main": "dist/index.js",
   "bin": {
