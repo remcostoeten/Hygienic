@@ -107,91 +107,44 @@ Run `hygienic --config` for interactive configuration, or manually edit `~/.conf
 - **Flexible Filtering** - Include/exclude patterns for fine-grained control
 - **CI/CD Ready** - Check mode for continuous integration
 
-## API Usage
+## Programmatic API
 
-Yes! Hygienic provides a comprehensive API for programmatic usage:
+> **Most users should use the CLI.** The API is for build tool integrations, CI/CD, and advanced use cases.
 
-### Basic Example
+### Quick Example
 
 ```typescript
 import { UIImportConsolidator, Config } from '@remcostoeten/hygienic';
 
-async function consolidateImports() {
-  // 1. Initialize configuration
-  const config = new Config();
-  await config.initialize();
-  
-  // 2. Create consolidator instance
-  const consolidator = new UIImportConsolidator(
-    config,
-    false, // verbose
-    false  // quiet
-  );
-  await consolidator.initialize();
-  
-  // 3. Process files
-  const results = await consolidator.processFiles(
-    ['src/'],      // paths to process
-    true,          // dryRun (false to actually modify files)
-    true,          // sortImports
-    undefined,     // includePatterns
-    undefined,     // excludePatterns  
-    true           // useCache
-  );
-  
-  // 4. Handle results
-  const changedFiles = results.filter(r => r.changed);
-  console.log(`Modified ${changedFiles.length} files`);
-  
-  return results;
+const config = new Config();
+await config.initialize();
+
+const consolidator = new UIImportConsolidator(config, false, false);
+await consolidator.initialize();
+
+const results = await consolidator.processFiles(['src/'], false, true);
+console.log(`Processed ${results.length} files`);
+```
+
+### Common Integration Patterns
+
+**Build Tools (Vite, Webpack):**
+```javascript
+// Auto-consolidate during build
+const results = await consolidator.processFiles(['src/'], false, true);
+```
+
+**CI/CD Automation:**
+```javascript
+// Check if imports need consolidation
+const results = await consolidator.processFiles(['src/'], true, true);
+if (results.some(r => r.changed)) {
+  process.exit(1); // Fail CI if changes needed
 }
 ```
 
-### Available Exports
-
-```typescript
-import {
-  UIImportConsolidator,  // Main processing engine
-  Config,                // Configuration management
-  TSXParser,            // TypeScript/JSX parsing
-  Cache,                // File caching
-  History,              // Run history
-  Colors,               // Terminal colors
-  interactiveConfig,    // Interactive config setup
-  interactiveHistory,   // Interactive history viewer
-  showHelp,            // Help display
-  // Types
-  TConsolidationResult,
-  TImportInfo,
-  TConfig,
-  TRunHistory,
-  TCacheData
-} from '@remcostoeten/hygienic';
-```
-
-### Advanced Usage
-
-```typescript
-// Custom configuration
-const config = new Config();
-await config.initialize();
-config.set('barrelPaths', ['src/components/ui/index.ts']);
-config.set('sortImports', true);
-
-// Direct parser usage
-const parser = new TSXParser(new Set(['Button', 'Input', 'Card']));
-const [imports, content] = await parser.parseTSXFile('MyComponent.tsx');
-
-// Process with custom options
-const results = await consolidator.processFiles(
-  ['src/components', 'src/pages'],
-  false,                    // Apply changes
-  true,                     // Sort imports
-  ['components', 'pages'],  // Include only these paths
-  ['test', 'stories'],      // Exclude test/story files
-  false                     // Disable cache for fresh run
-);
-```
+**Available Classes:** `UIImportConsolidator`, `Config`, `TSXParser`, `Cache`, `History`  
+**Types:** `TConsolidationResult`, `TImportInfo`, `TConfig`, `TRunHistory`
 
 ## Migration from ui-import-consolidator
 
