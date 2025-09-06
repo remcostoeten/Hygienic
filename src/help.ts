@@ -1,11 +1,9 @@
 import { Colors } from './colors';
 import open from 'open';
 import { noop } from './utils/noop';
-
 const VERSION = '1.0.0';
 const AUTHOR = 'Remco Stoeten (@remcostoeten on GitHub)';
 const GITHUB_URL = 'https://github.com/remcostoeten';
-
 export async function showHelp() {
   const helpText = `
 ${Colors.bold(Colors.cyan(`Hygienic v${VERSION}`))}
@@ -45,18 +43,16 @@ ${Colors.bold('EXAMPLES:')}
   hygienic src/pages/home.tsx --fix
   hygienic "src/**/*.{ts,tsx}" --check
 
-${Colors.bold('Last updated:')} ${new Date().toLocaleString()}
+${Colors.bold('Last updated:')}
 
 ${Colors.yellow('Press SPACEBAR to open GitHub profile...')}
 `;
-
   console.log(helpText);
-
   try {
     process.stdin.setRawMode(true);
     process.stdin.resume();
     process.stdin.on('data', async (key) => {
-      if (key[0] === 32) { // spacebar
+      if (key[0] === 32) { 
         await open(GITHUB_URL);
         console.log(Colors.green('Opening GitHub profile...'));
         process.exit(0);
@@ -64,7 +60,6 @@ ${Colors.yellow('Press SPACEBAR to open GitHub profile...')}
         process.exit(0);
       }
     });
-
     setTimeout(() => {
       process.exit(0);
     }, 5000);

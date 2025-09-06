@@ -2,10 +2,8 @@ import { promises as fs } from 'fs';
 const { parse } = require('@typescript-eslint/parser');
 import { TSESTree } from '@typescript-eslint/types';
 import { TImportInfo } from './types';
-
 export class TSXParser {
   constructor(private uiComponents: Set<string>) { }
-
   async parseBarrelFile(barrelPath: string): Promise<Set<string>> {
     const components = new Set<string>();
     try {
@@ -17,7 +15,6 @@ export class TSXParser {
           jsx: true
         }
       });
-
       this.walkAST(ast, (node) => {
         if (node.type === 'ExportNamedDeclaration' && node.specifiers) {
           for (const specifier of node.specifiers) {
@@ -30,13 +27,10 @@ export class TSXParser {
     } catch (error) {
       console.warn(`Warning: Could not parse barrel file ${barrelPath}: ${error}`);
     }
-
     return components;
   }
-
   async parseTSXFile(filePath: string): Promise<[TImportInfo[], string]> {
     const content = await fs.readFile(filePath, 'utf-8');
-
     try {
       const ast = parse(content, {
         ecmaVersion: 2020,
@@ -45,19 +39,15 @@ export class TSXParser {
           jsx: true
         }
       });
-
       const imports: TImportInfo[] = [];
-
       this.walkAST(ast, (node) => {
         if (node.type === 'ImportDeclaration' &&
           node.source.type === 'Literal' &&
           typeof node.source.value === 'string') {
-
           const moduleName = node.source.value;
           if (moduleName.startsWith('@/shared/components/ui/') && moduleName !== '@/shared/components/ui') {
             const names = new Set<string>();
             const lineNumbers: number[] = [];
-
             if (node.specifiers) {
               for (const specifier of node.specifiers) {
                 if (specifier.type === 'ImportSpecifier' &&
@@ -76,7 +66,6 @@ export class TSXParser {
                 }
               }
             }
-
             if (names.size > 0) {
               imports.push({
                 module: moduleName,
@@ -87,16 +76,13 @@ export class TSXParser {
           }
         }
       });
-
       return [imports, content];
     } catch (error) {
       throw new Error(`Could not parse ${filePath} as valid TypeScript: ${error}`);
     }
   }
-
   private walkAST(node: TSESTree.Node, callback: (node: TSESTree.Node) => void) {
     callback(node);
-
     for (const [key, value] of Object.entries(node)) {
       if (value && typeof value === 'object') {
         if (Array.isArray(value)) {

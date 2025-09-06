@@ -1,14 +1,17 @@
 # Hygienic
 
-Consolidates UI component imports from individual files into barrel imports.
+Hygienic is a versatile TypeScript tool that cleans up unused imports, types, methods, and variables, organizes barrel file imports, and enforces a consistent structure—making your colleagues hate you less while reviewing your code.
 
-## Install
+Available as a global npm package, a dev dependency, or as an API configurable in your CI.
+
+
+## install
 
 ```bash
 bun add -g @remcostoeten/hygienic
 ```
 
-Or run without installing:
+or run without installing:
 ```bash
 bunx @remcostoeten/hygienic src/
 ```
