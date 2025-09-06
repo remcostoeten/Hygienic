@@ -23,7 +23,7 @@ async function main() {
     .option('--fix', 'Apply changes (default is dry-run)')
     .option('--dry-run', 'Show changes without applying')
     .option('--sort', 'Sort imports alphabetically')
-    .option('--force, -f', 'Force run with uncommitted changes')
+    .option('-f, --force', 'Force run with uncommitted changes')
     .option('--verbose', 'Verbose output')
     .option('--quiet', 'Minimal output')
     .option('--check', 'Check mode for CI')
