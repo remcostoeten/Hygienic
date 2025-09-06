@@ -1,20 +1,27 @@
 # Hygienic
 
-Hygienic is a versatile TypeScript tool that cleans up unused imports, types, methods, and variables, organizes barrel file imports, and enforces a consistent structure—making your colleagues hate you less while reviewing your code.
+**Hygienic** is a versatile TypeScript tool that:
+- Cleans up unused imports, types, methods, and variables  
+- Organizes barrel file imports  
+- Enforces a consistent structure  
 
-Available as a global npm package, a dev dependency, or as an API configurable in your CI.
+👉 Making your colleagues hate you less during code reviews.
 
+---
 
-## install
+## Install
 
 ```bash
 bun add -g @remcostoeten/hygienic
 ```
 
-or run without installing:
+Or run without installing:
+
 ```bash
 bunx @remcostoeten/hygienic src/
 ```
+<small><i>pnpm also works, or npm/yarn if you're a maniac</i></small>
+---
 
 ## Usage
 
@@ -24,22 +31,21 @@ hygienic src/ --fix    # Apply changes
 ```
 
 ### Options
-
-- `--fix` - Apply changes (default shows preview)
-- `--sort` - Sort imports alphabetically
-- `--check` - Exit with error if changes needed (CI mode)
-- `--verbose` - Show detailed output
-- `--except <patterns>` - Skip files/folders
-- `--include <patterns>` - Only process these patterns
-- `--config` - Interactive setup
+- `--check` - Exit with error if changes needed (CI mode)  
+- `--verbose` - Show detailed output  
+- `--except <patterns>` - Skip files/folders  
+- `--include <patterns>` - Only process these patterns  
+- `--config` - Interactive setup  
 
 ### Examples
 
 ```bash
 hygienic src/ --fix --sort
-hygienic components/ --check  # For CI
+hygienic components/ --check   # CI mode
 hygienic src/ --except test stories
 ```
+
+---
 
 ## What it does
 
@@ -55,7 +61,9 @@ import { Card } from '@/shared/components/ui/card';
 import { Button, Input, Card } from '@/shared/components/ui';
 ```
 
-## Config
+---
+
+## ⚙️ Config
 
 Run `hygienic --config` or edit `~/.config/import-consolidator/config.json`:
 
@@ -67,19 +75,23 @@ Run `hygienic --config` or edit `~/.config/import-consolidator/config.json`:
 }
 ```
 
+---
+
 ## Features
 
-- Only consolidates imports that exist in barrel files
-- Creates backups before making changes
-- Caches results for faster subsequent runs
-- Git status checking
-- CI/CD support with `--check` mode
+- Consolidates only when a barrel file exists  
+- Creates backups before making changes  
+- Caches results for speed  
+- Git status checking  
+- CI/CD support with `--check`  
+
+---
 
 ## API
 
 For build tools and custom integrations:
 
-```typescript
+```ts
 import { UIImportConsolidator, Config } from '@remcostoeten/hygienic';
 
 const config = new Config();
@@ -93,21 +105,7 @@ const results = await consolidator.processFiles(['src/'], false, true);
 
 See `examples/` for more.
 
-## Migration from ui-import-consolidator
+---
 
-- Package: `ui-import-consolidator` → `@remcostoeten/hygienic`
-- Command: `ui-consolidate` → `hygienic`
-- Imports: `from 'ui-import-consolidator'` → `from '@remcostoeten/hygienic'`
-
-## License
-
-BSD 3-Clause with attribution requirement. See [LICENSE](LICENSE).
-
-If you use this tool, add this line to your README:
-```
-This project uses Hygienic by Remco Stoeten (@remcostoeten)
-```
-
-## Author
-
-Remco Stoeten (@remcostoeten)
+xxx,
+Remco Stoeten

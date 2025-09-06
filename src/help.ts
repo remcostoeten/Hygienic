@@ -1,7 +1,7 @@
 import { Colors } from './colors';
 import open from 'open';
 import { noop } from './utils/noop';
-const VERSION = '0.0.1';
+const VERSION = '0.0.0';
 const AUTHOR = 'Remco Stoeten (@remcostoeten on GitHub)';
 const GITHUB_URL = 'https://github.com/remcostoeten';
 export async function showHelp() {
@@ -9,7 +9,7 @@ export async function showHelp() {
 ${Colors.bold(Colors.cyan(`Hygienic v${VERSION}`))}
 ${Colors.blue(`Made by ${AUTHOR}`)}
 ${Colors.dim('Code hygiene tool that consolidates and normalizes imports across your codebase.')}
-
+np
 ${Colors.bold('USAGE:')}
   hygienic [OPTIONS] [PATHS...]
 
