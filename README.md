@@ -1,74 +1,44 @@
 # Hygienic
 
-A code hygiene tool that consolidates and normalizes imports across your codebase. Built for TypeScript/React projects with barrel file patterns.
+Consolidates UI component imports from individual files into barrel imports.
 
-## Installation
+## Install
 
 ```bash
-# Install globally with Bun
 bun add -g @remcostoeten/hygienic
+```
 
-# Or run directly with bunx
-bunx @remcostoeten/hygienic
-
-# Or as a dev dependency
-bun add -D @remcostoeten/hygienic
+Or run without installing:
+```bash
+bunx @remcostoeten/hygienic src/
 ```
 
 ## Usage
 
-### Basic Usage
-
 ```bash
-# Dry run (shows what would change)
-hygienic src/
-
-# Apply changes
-hygienic --fix src/
-
-# Process specific file
-hygienic --fix src/components/MyComponent.tsx
+hygienic src/          # Preview changes
+hygienic src/ --fix    # Apply changes
 ```
 
 ### Options
 
-- `--fix` - Apply changes (default is dry-run)
-- `--sort` - Sort consolidated imports alphabetically
-- `--force, -f` - Run even with uncommitted git changes
-- `--verbose` - Show detailed logs
-- `--quiet` - Show minimal logs
-- `--check` - Exit non-zero if files need consolidation (useful for CI)
-- `--except <patterns...>` - Exclude files/folders
-- `--include <patterns...>` - Include specific files
-- `--barrel <paths...>` - Add barrel file paths
-- `--no-cache` - Disable incremental cache
-- `--report` - Generate JSON report
-- `--config` - Interactive configuration
-- `--history` - Show run history
-- `--clear-history` - Clear stored history
+- `--fix` - Apply changes (default shows preview)
+- `--sort` - Sort imports alphabetically
+- `--check` - Exit with error if changes needed (CI mode)
+- `--verbose` - Show detailed output
+- `--except <patterns>` - Skip files/folders
+- `--include <patterns>` - Only process these patterns
+- `--config` - Interactive setup
 
 ### Examples
 
 ```bash
-# Dry run with sorting
-hygienic --sort src/
-
-# Fix with verbose output
-hygienic --fix --verbose components/
-
-# Check mode for CI
-hygienic --check src/
-
-# Exclude node_modules and test files
-hygienic --fix --except node_modules test src/
-
-# Include only specific directories
-hygienic --fix --include components pages src/
+hygienic src/ --fix --sort
+hygienic components/ --check  # For CI
+hygienic src/ --except test stories
 ```
 
-## What It Does
-
-This tool consolidates multiple UI component imports from specific paths into a single import from a barrel file.
+## What it does
 
 **Before:**
 ```tsx
@@ -82,36 +52,29 @@ import { Card } from '@/shared/components/ui/card';
 import { Button, Input, Card } from '@/shared/components/ui';
 ```
 
-## Configuration
+## Config
 
-Run `hygienic --config` for interactive configuration, or manually edit `~/.config/import-consolidator/config.json`:
+Run `hygienic --config` or edit `~/.config/import-consolidator/config.json`:
 
 ```json
 {
   "barrelPaths": ["src/shared/components/ui/index.ts"],
   "extensions": [".tsx"],
-  "defaultExcludes": ["node_modules", ".git", "dist", "build"],
-  "sortImports": false,
-  "cacheEnabled": true,
-  "uiComponents": []
+  "sortImports": false
 }
 ```
 
 ## Features
 
-- **Smart Detection** - Only consolidates imports that are actually exported from barrel files
-- **Backup System** - Automatically creates backups before making changes
-- **Incremental Cache** - Skips unchanged files for better performance
-- **Git Integration** - Checks for uncommitted changes before running
-- **History Tracking** - Keeps track of previous runs
-- **Flexible Filtering** - Include/exclude patterns for fine-grained control
-- **CI/CD Ready** - Check mode for continuous integration
+- Only consolidates imports that exist in barrel files
+- Creates backups before making changes
+- Caches results for faster subsequent runs
+- Git status checking
+- CI/CD support with `--check` mode
 
-## Programmatic API
+## API
 
-> **Most users should use the CLI.** The API is for build tool integrations, CI/CD, and advanced use cases.
-
-### Quick Example
+For build tools and custom integrations:
 
 ```typescript
 import { UIImportConsolidator, Config } from '@remcostoeten/hygienic';
@@ -119,72 +82,29 @@ import { UIImportConsolidator, Config } from '@remcostoeten/hygienic';
 const config = new Config();
 await config.initialize();
 
-const consolidator = new UIImportConsolidator(config, false, false);
+const consolidator = new UIImportConsolidator(config);
 await consolidator.initialize();
 
 const results = await consolidator.processFiles(['src/'], false, true);
-console.log(`Processed ${results.length} files`);
 ```
 
-### Common Integration Patterns
-
-**Build Tools (Vite, Webpack):**
-```javascript
-// Auto-consolidate during build
-const results = await consolidator.processFiles(['src/'], false, true);
-```
-
-**CI/CD Automation:**
-```javascript
-// Check if imports need consolidation
-const results = await consolidator.processFiles(['src/'], true, true);
-if (results.some(r => r.changed)) {
-  process.exit(1); // Fail CI if changes needed
-}
-```
-
-**Available Classes:** `UIImportConsolidator`, `Config`, `TSXParser`, `Cache`, `History`  
-**Types:** `TConsolidationResult`, `TImportInfo`, `TConfig`, `TRunHistory`
+See `examples/` for more.
 
 ## Migration from ui-import-consolidator
 
-This package was previously named `ui-import-consolidator`. If you're migrating:
-
-**Breaking Changes:**
-- Package name: `ui-import-consolidator` → `@remcostoeten/hygienic`
-- CLI command: `ui-consolidate` → `hygienic`
-- Programmatic imports: `from 'ui-import-consolidator'` → `from '@remcostoeten/hygienic'`
-
-**Migration steps:**
-1. Uninstall the old package: `bun remove ui-import-consolidator`
-2. Install the new package: `bun add -g @remcostoeten/hygienic`
-3. Update any scripts or workflows to use `hygienic` instead of `ui-consolidate`
-4. Update any programmatic imports in your code
-
-## Requirements
-
-- Node.js >= 16.0.0
-- TypeScript projects with JSX/TSX files
+- Package: `ui-import-consolidator` → `@remcostoeten/hygienic`
+- Command: `ui-consolidate` → `hygienic`
+- Imports: `from 'ui-import-consolidator'` → `from '@remcostoeten/hygienic'`
 
 ## License
 
-BSD 3-Clause License with README Attribution Requirement
+BSD 3-Clause with attribution requirement. See [LICENSE](LICENSE).
 
-This software is free to use and modify, but requires attribution in your project's README or primary documentation when used. See the [LICENSE](LICENSE) file for full details.
-
-### Attribution Requirements
-
-If you use or modify this software, you must include attribution in your README:
-
-```markdown
-This project uses or is based on [Hygienic](https://github.com/remcostoeten/hygienic) by Remco Stoeten (@remcostoeten)
+If you use this tool, add this line to your README:
 ```
-
-**Required elements:**
-- Reference to "Hygienic" as the original tool
-- Link to the original repository or npm package
-- Credit to "Remco Stoeten (@remcostoeten)"
+This project uses Hygienic by Remco Stoeten (@remcostoeten)
+```
 
 ## Author
 
-Remco Stoeten (@remcostoeten on GitHub)
+Remco Stoeten (@remcostoeten)
