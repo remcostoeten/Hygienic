@@ -1,7 +1,7 @@
 {
   "name": "@remcostoeten/hygienic",
   "version": "0.0.1",
-  "description": "Hygienic is a code hygiene tool that consolidates and normalizes imports across your codebase.",
+  "description": "Consolidates UI component imports from individual files into barrel imports. CLI tool with caching, git integration, and CI support.",
   "main": "dist/index.js",
   "bin": {
     "hygienic": "dist/cli.js"
@@ -31,6 +31,14 @@
   ],
   "author": "Remco Stoeten (@remcostoeten on GitHub)",
   "license": "BSD-3-Clause-Attribution",
+  "homepage": "https://github.com/remcostoeten/hygienic#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remcostoeten/hygienic.git"
+  },
+  "bugs": {
+    "url": "https://github.com/remcostoeten/hygienic/issues"
+  },
   "dependencies": {
     "@typescript-eslint/parser": "^8.42.0",
     "@typescript-eslint/types": "^8.42.0",
