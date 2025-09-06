@@ -150,7 +150,22 @@ This package was previously named `ui-import-consolidator`. If you're migrating:
 
 ## License
 
-MIT
+BSD 3-Clause License with README Attribution Requirement
+
+This software is free to use and modify, but requires attribution in your project's README or primary documentation when used. See the [LICENSE](LICENSE) file for full details.
+
+### Attribution Requirements
+
+If you use or modify this software, you must include attribution in your README:
+
+```markdown
+This project uses or is based on [Hygienic](https://github.com/remcostoeten/hygienic) by Remco Stoeten (@remcostoeten)
+```
+
+**Required elements:**
+- Reference to "Hygienic" as the original tool
+- Link to the original repository or npm package
+- Credit to "Remco Stoeten (@remcostoeten)"
 
 ## Author
 

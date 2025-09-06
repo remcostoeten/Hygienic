@@ -29,7 +29,7 @@
     "barrel"
   ],
   "author": "Remco Stoeten (@remcostoeten on GitHub)",
-  "license": "MIT",
+  "license": "BSD-3-Clause-Attribution",
   "dependencies": {
     "@typescript-eslint/parser": "^8.42.0",
     "@typescript-eslint/types": "^8.42.0",
