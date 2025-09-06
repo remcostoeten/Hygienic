@@ -1,0 +1,8 @@
+dist
+node_modules
+bun.lockb
+coverage
+.cache
+*.md
+LICENSE
+scripts/release.js
