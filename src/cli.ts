@@ -15,8 +15,8 @@ const program = new Command();
 
 async function main() {
   program
-    .name('ui-consolidate')
-    .description('Consolidate UI imports from barrel files')
+    .name('hygienic')
+    .description('Hygienic is a code hygiene tool that consolidates and normalizes imports across your codebase.')
     .version('1.0.0')
     .arguments('[paths...]')
     .option('--help-extended', 'Show extended help')

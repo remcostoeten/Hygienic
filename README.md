@@ -1,17 +1,18 @@
-# UI Import Consolidator
+# Hygienic
 
-A Node.js CLI tool to consolidate UI component imports from barrel files in TypeScript/React projects.
+A code hygiene tool that consolidates and normalizes imports across your codebase. Built for TypeScript/React projects with barrel file patterns.
 
 ## Installation
 
 ```bash
-npm install -g ui-import-consolidator
-```
+# Install globally with Bun
+bun add -g @remcostoeten/hygienic
 
-Or use with npx:
+# Or run directly with bunx
+bunx @remcostoeten/hygienic
 
-```bash
-npx ui-import-consolidator
+# Or as a dev dependency
+bun add -D @remcostoeten/hygienic
 ```
 
 ## Usage
@@ -20,13 +21,13 @@ npx ui-import-consolidator
 
 ```bash
 # Dry run (shows what would change)
-ui-consolidate src/
+hygienic src/
 
 # Apply changes
-ui-consolidate --fix src/
+hygienic --fix src/
 
 # Process specific file
-ui-consolidate --fix src/components/MyComponent.tsx
+hygienic --fix src/components/MyComponent.tsx
 ```
 
 ### Options
@@ -50,19 +51,19 @@ ui-consolidate --fix src/components/MyComponent.tsx
 
 ```bash
 # Dry run with sorting
-ui-consolidate --sort src/
+hygienic --sort src/
 
 # Fix with verbose output
-ui-consolidate --fix --verbose components/
+hygienic --fix --verbose components/
 
 # Check mode for CI
-ui-consolidate --check src/
+hygienic --check src/
 
 # Exclude node_modules and test files
-ui-consolidate --fix --except node_modules test src/
+hygienic --fix --except node_modules test src/
 
 # Include only specific directories
-ui-consolidate --fix --include components pages src/
+hygienic --fix --include components pages src/
 ```
 
 ## What It Does
@@ -83,7 +84,7 @@ import { Button, Input, Card } from '@/shared/components/ui';
 
 ## Configuration
 
-Run `ui-consolidate --config` for interactive configuration, or manually edit `~/.config/import-consolidator/config.json`:
+Run `hygienic --config` for interactive configuration, or manually edit `~/.config/import-consolidator/config.json`:
 
 ```json
 {
@@ -109,7 +110,7 @@ Run `ui-consolidate --config` for interactive configuration, or manually edit `~
 ## API Usage
 
 ```typescript
-import { UIImportConsolidator, Config } from 'ui-import-consolidator';
+import { UIImportConsolidator, Config } from '@remcostoeten/hygienic';
 
 const config = new Config();
 await config.initialize();
@@ -126,6 +127,21 @@ const results = await consolidator.processFiles(
   true   // useCache
 );
 ```
+
+## Migration from ui-import-consolidator
+
+This package was previously named `ui-import-consolidator`. If you're migrating:
+
+**Breaking Changes:**
+- Package name: `ui-import-consolidator` → `@remcostoeten/hygienic`
+- CLI command: `ui-consolidate` → `hygienic`
+- Programmatic imports: `from 'ui-import-consolidator'` → `from '@remcostoeten/hygienic'`
+
+**Migration steps:**
+1. Uninstall the old package: `bun remove ui-import-consolidator`
+2. Install the new package: `bun add -g @remcostoeten/hygienic`
+3. Update any scripts or workflows to use `hygienic` instead of `ui-consolidate`
+4. Update any programmatic imports in your code
 
 ## Requirements
 

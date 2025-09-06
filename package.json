@@ -1,10 +1,13 @@
 {
-  "name": "ui-import-consolidator",
+  "name": "@remcostoeten/hygienic",
   "version": "1.0.0",
-  "description": "Consolidate UI imports from barrel files",
+  "description": "Hygienic is a code hygiene tool that consolidates and normalizes imports across your codebase.",
   "main": "dist/index.js",
   "bin": {
-    "ui-consolidate": "dist/cli.js"
+    "hygienic": "dist/cli.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc",
@@ -15,9 +18,13 @@
     "prepublishOnly": "npm run build"
   },
   "keywords": [
+    "hygienic",
     "typescript",
     "imports",
-    "consolidation",
+    "consolidate",
+    "code hygiene",
+    "refactor",
+    "formatter",
     "ui",
     "barrel"
   ],

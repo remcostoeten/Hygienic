@@ -8,11 +8,12 @@ const GITHUB_URL = 'https://github.com/remcostoeten';
 
 export async function showHelp() {
   const helpText = `
-${Colors.bold(Colors.cyan(`UI Import Consolidator v${VERSION}`))}
+${Colors.bold(Colors.cyan(`Hygienic v${VERSION}`))}
 ${Colors.blue(`Made by ${AUTHOR}`)}
+${Colors.dim('Code hygiene tool that consolidates and normalizes imports across your codebase.')}
 
 ${Colors.bold('USAGE:')}
-  ui-consolidate [OPTIONS] [PATHS...]
+  hygienic [OPTIONS] [PATHS...]
 
 ${Colors.bold('PATHS:')}
   <file.tsx>      Process single file
@@ -38,9 +39,11 @@ ${Colors.bold('OPTIONS:')}
   ${Colors.green('--disable-history')}   Disable history tracking
 
 ${Colors.bold('EXAMPLES:')}
-  ui-consolidate --dry-run src/
-  ui-consolidate --fix --sort components/
-  ui-consolidate --fix src/pages/home.tsx
+  hygienic .
+  hygienic src --fix
+  hygienic src --fix --sort
+  hygienic src/pages/home.tsx --fix
+  hygienic "src/**/*.{ts,tsx}" --check
 
 ${Colors.bold('Last updated:')} ${new Date().toLocaleString()}
 

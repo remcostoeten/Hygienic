@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { parse } from '@typescript-eslint/parser';
+const { parse } = require('@typescript-eslint/parser');
 import { TSESTree } from '@typescript-eslint/types';
 import { TImportInfo } from './types';
 

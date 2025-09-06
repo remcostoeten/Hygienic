@@ -8,6 +8,7 @@ export const Colors = {
   magenta: chalk.magenta,
   cyan: chalk.cyan,
   white: chalk.white,
+  dim: chalk.dim,
   bold: chalk.bold,
   underline: chalk.underline,
   reset: (text: string) => text
