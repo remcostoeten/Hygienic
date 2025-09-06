@@ -212,7 +212,8 @@ async function main() {
     
     // 6. Push to GitHub
     console.log(Colors.blue('Pushing to GitHub...'));
-    execCommand('git push origin main');
+    const currentBranch = execCommand('git branch --show-current', { silent: true });
+    execCommand(`git push origin ${currentBranch}`);
     execCommand(`git push origin v${newVersion}`);
     console.log(Colors.green('✓ Pushed to GitHub'));
     
