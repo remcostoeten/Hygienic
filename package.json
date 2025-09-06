@@ -1,0 +1,49 @@
+{
+  "name": "ui-import-consolidator",
+  "version": "1.0.0",
+  "description": "Consolidate UI imports from barrel files",
+  "main": "dist/index.js",
+  "bin": {
+    "ui-consolidate": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/cli.js",
+    "test": "bun test",
+    "test:jest": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "typescript",
+    "imports",
+    "consolidation",
+    "ui",
+    "barrel"
+  ],
+  "author": "Remco Stoeten (@remcostoeten on GitHub)",
+  "license": "MIT",
+  "dependencies": {
+    "@typescript-eslint/parser": "^8.42.0",
+    "@typescript-eslint/types": "^8.42.0",
+    "chalk": "^5.3.0",
+    "commander": "^11.0.0",
+    "glob": "^10.3.0",
+    "open": "^9.1.0",
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@types/node": "^20.0.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ]
+}
